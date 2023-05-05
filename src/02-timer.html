@@ -8,7 +8,30 @@
   </head>
   <body>
     <p><a href="index.html">Go back</a></p>
+    <style>
+      .timer {
+        display: flex;
+        margin-top: 15px;
+        justify-content: center;
+        background-color: antiquewhite;
+      }
+      .field:not(:last-child) {
+        margin-right: 10px;
+      }
 
+      .value,
+      .label {
+        display: flex;
+        justify-content: center;
+      }
+      .value {
+        font-size: 56px;
+        font-weight: 600;
+      }
+      .red {
+        color: red;
+      }
+    </style>
     <input type="text" id="datetime-picker" />
     <button type="button" data-start>Start</button>
 
