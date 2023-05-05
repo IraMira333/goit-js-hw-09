@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 const refs = {
@@ -7,7 +8,10 @@ const refs = {
   minutesSpanEl: document.querySelector('span[data-minutes]'),
   secondsSpanEl: document.querySelector('span[data-seconds]'),
 };
+refs.startBtnEl.setAttribute('disabled', '');
+
 const options = {
+  intervalId: null,
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -17,7 +21,7 @@ const options = {
     const startTimeMs = startTime.getTime();
 
     if (startTime - options.defaultDate < 0) {
-      alert('Please choose a date in the future');
+      Notify.failure('Please choose a date in the future');
       return;
     }
     if (startTime - options.defaultDate > 0) {
@@ -26,16 +30,26 @@ const options = {
     }
   },
   onStartTimerBtnClick() {
-    setInterval(() => {
-      const currentTimeMs = Date.now();
-      const deltaTime = options.startTimeMs - currentTimeMs;
+    refs.startBtnEl.setAttribute('disabled', '');
 
-      console.log(deltaTime);
+    this.intervalId = setInterval(() => {
+      const currentTimeMs = Date.now();
+      const ms = options.startTimeMs - currentTimeMs;
+      console.log(ms);
+
+      const leftTime = convertMs(ms);
+      updateTimerFace(leftTime);
+      if (ms < 60000) {
+        refs.secondsSpanEl.classList.add('red');
+      }
+      if (ms < 1000) {
+        clearInterval(this.intervalId);
+        return;
+      }
     }, 1000);
   },
 };
 
-refs.startBtnEl.setAttribute('disabled', '');
 refs.startBtnEl.addEventListener('click', options.onStartTimerBtnClick);
 
 const fp = flatpickr('#datetime-picker', options);
