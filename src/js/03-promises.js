@@ -8,7 +8,7 @@ const refs = {
   createPromiseBtnEl: document.querySelector('button[type="submit"]'),
 };
 
-refs.createPromiseBtnEl.addEventListener('submit', onCreatePromiseBtn);
+refs.createPromiseBtnEl.addEventListener('click', onCreatePromiseBtn);
 
 function onCreatePromiseBtn(evt) {
   evt.preventDefault();
