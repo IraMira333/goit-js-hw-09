@@ -1,6 +1,5 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-let position = 0;
 const refs = {
   delayInputEl: document.querySelector('[name="delay"]'),
   stepInputEl: document.querySelector('[name="step"]'),
