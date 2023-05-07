@@ -16,18 +16,18 @@ function onCreatePromiseBtn(evt) {
   const delay = Number(refs.delayInputEl.value);
   const step = Number(refs.stepInputEl.value);
   const amount = Number(refs.amountInputEl.value);
-  let delayPlusStep = delay;
+  let delayPlusStep = delay - step;
   const intervalId = setInterval(() => {
     position += 1;
     if (position > amount) {
       clearInterval(intervalId);
-      refs.delayInputEl.value = '';
-      refs.stepInputEl.value = '';
-      refs.amountInputEl.value = '';
+      // refs.delayInputEl.value = '';
+      // refs.stepInputEl.value = '';
+      // refs.amountInputEl.value = '';
       position = 0;
       return;
     }
-    delayPlusStep += step * (position - 1);
+    delayPlusStep += step;
     createPromise(position, delayPlusStep)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
