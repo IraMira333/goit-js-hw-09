@@ -21,9 +21,6 @@ function onCreatePromiseBtn(evt) {
     position += 1;
     if (position > amount) {
       clearInterval(intervalId);
-      // refs.delayInputEl.value = '';
-      // refs.stepInputEl.value = '';
-      // refs.amountInputEl.value = '';
       position = 0;
       return;
     }
