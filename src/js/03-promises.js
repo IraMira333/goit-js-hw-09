@@ -13,10 +13,10 @@ refs.createPromiseBtnEl.addEventListener('click', onCreatePromiseBtn);
 function onCreatePromiseBtn(evt) {
   evt.preventDefault();
 
-  const delay = Number(refs.delayInputEl.value);
+  const delayVal = Number(refs.delayInputEl.value);
   const step = Number(refs.stepInputEl.value);
   const amount = Number(refs.amountInputEl.value);
-  let delayPlusStep = delay - step;
+  let delay = delayVal - step;
   const intervalId = setInterval(() => {
     position += 1;
     if (position > amount) {
@@ -24,17 +24,17 @@ function onCreatePromiseBtn(evt) {
       position = 0;
       return;
     }
-    delayPlusStep += step;
-    createPromise(position, delayPlusStep)
+    delay += step;
+    createPromise(position, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
-    console.log(position, delayPlusStep);
-  }, delayPlusStep);
-  console.log(delay, step, amount, position);
+    console.log(position, delay);
+  }, delay);
+  console.log(delayVal, step, amount, position);
 }
 
 function createPromise(position, delay) {
