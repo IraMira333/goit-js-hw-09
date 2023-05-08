@@ -12,19 +12,24 @@ refs.formEl.addEventListener('submit', onCreatePromiseBtn);
 function onCreatePromiseBtn(evt) {
   evt.preventDefault();
 
-  const delay = Number(refs.delayInputEl.value);
+  let delay = Number(refs.delayInputEl.value);
   const step = Number(refs.stepInputEl.value);
   const amount = Number(refs.amountInputEl.value);
-
+  if (delay < 0 || step < 0 || amount < 0) {
+    Notify.failure(
+      `"First delay" and  "Delay step" must be 0 or more. "Amount" must be more than 0.`
+    );
+    return;
+  }
   for (let i = 1; i <= amount; i += 1) {
-    const delayTime = delay + (i - 1) * step;
-    createPromise(i, delayTime)
+    createPromise(i, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
+    delay += step;
   }
 }
 
